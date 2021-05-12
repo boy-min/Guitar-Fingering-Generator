@@ -8,7 +8,7 @@
 
 ## Final report
 
-[OSS project proposal final report.docs](OSSProjectProposalFinalReport.docs) : Final report about project
+[OSS project proposal final report.docx](OSSProjectProposalFinalReport.docx) : Final report about project
 
 ## Team Members
 
