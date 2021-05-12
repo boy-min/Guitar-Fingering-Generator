@@ -1,7 +1,5 @@
 # Guitar-Fingering-Generator
 
-<img src="C:\Users\sonhy\OneDrive\바탕 화면\cat-image-electricguitars6.jpg" alt="cat-image-electricguitars6" style="zoom:50%;" />
-
 2021 CAUSE Open Source Software Project TEAM 05
 
 
