@@ -13,7 +13,7 @@ class music :
             del self.__m_music[n]
 
         else :
-            print("OUT OF RANGE")
+            print("OutOfRangeError")
 
     def GetMusic(self) :
         return __m_music
