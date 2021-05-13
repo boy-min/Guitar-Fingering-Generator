@@ -6,5 +6,5 @@
 <summary>Class diagram</summary>
 </br>
 
-![Diagram](guitar_fingering_generator.svg)
+![Diagram](diagram/guitar_fingering_generator.svg)
 </details>
