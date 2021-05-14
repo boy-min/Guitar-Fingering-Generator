@@ -1,11 +1,14 @@
 class hand:
-    def __init__(self, size=0, length=0):
+    def __init__(self, size=0, length=0) :
         self.__size = size
         self.__length = length
 
-    def set(self, size, length):
+    def set(self, size, length) :
         self.__size = size
         self.__length = length
 
-    def get(self):
-        return {'size' : self.__size, 'length' : self.__length}
+    def get(self, key = None) :
+        if key == None : 
+            return {'size' : self.__size, 'length' : self.__length}
+        
+        return {'size' : self.__size, 'length' : self.__length}.get(key)
