@@ -1,17 +1,24 @@
 from Notes.Note import note
 
-class notes :
-    def __init__(self) :
+
+class notes:
+    def __init__(self):
         self.__list = []
 
-    def Append(self, n) :
-        self.__list.append(n)
+    def SetNotes(self, note_list):
+        for i in note_list:
+            if len(i) == 3:
+                n = note.note(i[0], i[1], i[2])
+                self.__list.append(n)
+            elif len(i) == 2:
+                n = note.note(i[0], i[1], 0)
+                self.__list.append(n)
+            else:
+                print("ParameterError")
+                break
 
-    def Delete(self, n) :
-        if n < len(self.__list) :
-            del self.__list[n]
-        else :
-            print("OutOfRangeError")
-
-    def GetList(self) :
-        return self.__list
+    def GetNotes(self):
+        result = []
+        for i in self.__list:
+            result.append(i.GetNote())
+        return result
