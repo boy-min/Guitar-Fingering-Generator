@@ -15,13 +15,13 @@ class generator:
     def GetMusicSheet(self):
         return self.__music.GetMusic()
 
-    def Convert(self) :
+    def Generate(self) :
         """
-        Convert의 기능 : 알고리즘을 통해 효율성을 고려한 fingering을 찾아
+        Generate의 기능 : 알고리즘을 통해 효율성을 고려한 fingering을 찾아
         music_sheet의 각 note 별로 fingering 정보를 수정하는 것
         """
         for i in self.__music.GetMusic():
-            self.__fingering.Find(i)
+            self.__fingering.SetFingering(i)
         """
         Algorithms
         """

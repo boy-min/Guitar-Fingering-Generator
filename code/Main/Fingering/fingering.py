@@ -16,8 +16,8 @@ class fingering:
         else:
             print("OutOfRangeError")
 
-    def Find(self, n):
+    def SetFingering(self, n):
         """
-        Find의 기능 : self.__fingering에 저장되어 있는 코드들의 운지법 중
+        SetFingering의 기능 : self.__fingering에 저장되어 있는 코드들의 운지법 중
         입력으로 받은 것과 가장 유사한 코드를 찾아 fingering을 설정하는 것
         """
