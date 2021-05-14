@@ -1,5 +1,5 @@
+import sys
 from notes import notes
-
 
 class fingering:
     def __init__(self) :
@@ -55,7 +55,7 @@ class fingering:
             del self.__fingering[index]
 
         else:
-            print("OutOfRangeError")
+            sys.exit("OutOfRangeError")
 
     def get(self) :
         return self.__fingering
