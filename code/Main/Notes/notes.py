@@ -7,12 +7,15 @@ class notes:
 
     def SetNotes(self, note_list):
         for i in note_list:
-            if len(i) != 3:
-                print("ParameterError")
-                break
-            else:
+            if len(i) == 3:
                 n = note.note(i[0], i[1], i[2])
                 self.__list.append(n)
+            elif len(i) == 2:
+                n = note.note(i[0], i[1], 0)
+                self.__list.append(n)
+            else:
+                print("ParameterError")
+                break
 
     def GetNotes(self):
         result = []
