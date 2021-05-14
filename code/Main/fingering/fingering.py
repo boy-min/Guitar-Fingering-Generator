@@ -71,7 +71,6 @@ class fingering:
         """
 
     def __find_similar_code(self, n):
-        count = 0
         max_count = 0
         most_similar_index = 0
         
