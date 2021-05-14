@@ -2,11 +2,11 @@ from generator.hand import hand
 from music import music
 from fingering import fingering
 
-class generator:
+class Generator:
     def __init__(self, music_ = None):
-        self.__music = music.music()
-        self.__fingering = fingering.fingering()
-        self.__hand = hand.hand(0, 0)
+        self.__music = music.Music()
+        self.__fingering = fingering.Fingering()
+        self.__hand = hand.Hand(0, 0)
 
         if music_ != None : 
             self.set(music_)

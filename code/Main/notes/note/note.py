@@ -1,6 +1,6 @@
 import sys
 
-class note:
+class Note:
     def __init__(self, note_ = None):
         self.__string = 0
         self.__fret = 0

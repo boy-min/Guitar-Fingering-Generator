@@ -1,7 +1,7 @@
 import sys
 from notes import notes
 
-class fingering:
+class Fingering:
     def __init__(self) :
         self.__fingering = []
         
@@ -48,7 +48,7 @@ class fingering:
 
 
     def append(self, code) :
-        self.__fingering.append(notes.notes(code))
+        self.__fingering.append(notes.Notes(code))
 
     def delete(self, index) :
         if index < len(self.__fingering):

@@ -1,13 +1,13 @@
 import sys
 from notes.note import note
 
-class notes:
+class Notes:
     def __init__(self, notes_ = None):
         self.__notes = []
         self.set(notes_)
 
     def set(self, notes_) :
-        self.__notes = [note.note(note_) for note_ in notes_]
+        self.__notes = [note.Note(note_) for note_ in notes_]
     
     def get(self):
         return self.__notes
