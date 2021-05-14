@@ -1,19 +1,18 @@
-import sys, os
 from Notes import notes
 
-class music :
-    def __init__(self) :
-        self.__m_music = []
-        
-    def Append(self, n) :
-        self.__m_music.append(n)
 
-    def Delete(self, n) :
-        if n < len(self.__m_music) :
-            del self.__m_music[n]
+class music:
+    def __init__(self):
+        self.__music = []
 
-        else :
-            print("OutOfRangeError")
+    def SetMusic(self, music_sheet):
+        for i in music_sheet:
+            n = notes.notes()
+            n.SetNotes(i)
+            self.__music.append(n)
 
-    def GetMusic(self) :
-        return __m_music
+    def GetMusic(self):
+        result = []
+        for i in self.__music:
+            result.append(i.GetNotes())
+        return result
