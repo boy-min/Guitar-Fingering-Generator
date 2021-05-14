@@ -1,8 +1,7 @@
-from Generator import generator as g
-from Printer import printer as p
+from generator import generator as g
+from printer import printer
 
-g_generator = g.generator()
-g_generator.SetMusicSheet([[[1, 1, 0], [2, 2, 0]], [[3, 3, 0]]])
-g_generator.Generate()
-p.PrintSheet(g_generator.GetMusicSheet(), 0)
-p.PrintSheet(g_generator.GetMusicSheet(), 1)
+g_generator = g.generator([[[1, 1, 0], [2, 2, 0]], [[3, 3, 0]]])
+g_generator.generate()
+printer.show(g_generator.get(), 0)
+printer.show(g_generator.get(), 1)

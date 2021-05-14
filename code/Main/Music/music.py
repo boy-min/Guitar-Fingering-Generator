@@ -1,18 +1,28 @@
-from Notes import notes
-
+import sys
+from notes import notes
 
 class music:
-    def __init__(self):
+    def __init__(self, music_ = None):
         self.__music = []
+        if music_ != None :
+            self.set(music_)
 
-    def SetMusic(self, music_sheet):
-        for i in music_sheet:
-            n = notes.notes()
-            n.SetNotes(i)
-            self.__music.append(n)
+    def set(self, music_):
+        self.__music = [notes.notes(notes_) for notes_ in music_]
 
-    def GetMusic(self):
-        result = []
-        for i in self.__music:
-            result.append(i.GetNotes())
-        return result
+    def get(self) :
+        return self.__music
+
+    def show(self, index = -1) :
+        if index == -1 : 
+            for i, notes_ in enumerate(self.__music) :
+                print("notes #", i + 1, sep = '')
+                notes_.show()
+
+        else :
+            if index < len(self.__music) :
+                print("notes #", index + 1, sep = '')
+                self.__music[index].show()
+                
+            else :
+                sys.exit("OutOfRangeError")

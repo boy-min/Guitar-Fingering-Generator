@@ -3,9 +3,9 @@ class hand:
         self.__size = size
         self.__length = length
 
-    def SetHand(self, size, length):
+    def set(self, size, length):
         self.__size = size
         self.__length = length
 
-    def GetHand(self):
-        return [self.__size, self.__length]
+    def get(self):
+        return {'size' : self.__size, 'length' : self.__length}

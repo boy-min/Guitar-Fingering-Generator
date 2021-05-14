@@ -1,24 +1,25 @@
-from Notes.Note import note
-
+import sys
+from notes.note import note
 
 class notes:
-    def __init__(self):
-        self.__list = []
+    def __init__(self, notes_ = None):
+        self.__notes = []
+        self.set(notes_)
 
-    def SetNotes(self, note_list):
-        for i in note_list:
-            if len(i) == 3:
-                n = note.note(i[0], i[1], i[2])
-                self.__list.append(n)
-            elif len(i) == 2:
-                n = note.note(i[0], i[1], 0)
-                self.__list.append(n)
-            else:
-                print("ParameterError")
-                break
+    def set(self, notes_) :
+        self.__notes = [note.note(note_) for note_ in notes_]
+    
+    def get(self):
+        return self.__notes
 
-    def GetNotes(self):
-        result = []
-        for i in self.__list:
-            result.append(i.GetNote())
-        return result
+    def show(self, index = -1) :
+        if index == -1 : 
+            for note_ in self.__notes :
+                note_.show()
+                
+        else :
+            if index < len(self.__notes) :
+                self.__notes[index].show()
+
+            else :
+                sys.exit("OutOfRangeError")
