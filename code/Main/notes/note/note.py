@@ -1,12 +1,12 @@
 import sys
 
-class Note:
-    def __init__(self, note_ = None):
+class Note :
+    def __init__(self, note_ = None) :
         self.__string = 0
         self.__fret = 0
         self.__finger = 0
 
-        if (note_ != None) : 
+        if note_ != None :
             if len(note_) == 3 : 
                 self.set(note_[0], note_[1], note_[2])
 
@@ -19,7 +19,7 @@ class Note:
     def __eq__(self, other) :
         return self.get('string') == other.get('string') and self.get('fret') == other.get('fret')
         
-    def set(self, string, fret, finger):
+    def set(self, string, fret, finger) :
         self.__string = string
         self.__fret = fret
         self.__finger = finger

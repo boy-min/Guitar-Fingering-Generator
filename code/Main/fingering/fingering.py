@@ -1,7 +1,7 @@
 import sys
 from notes import notes
 
-class Fingering:
+class Fingering :
     def __init__(self) :
         self.__fingering = []
         
@@ -44,14 +44,13 @@ class Fingering:
         ]
 
         for code in codes : 
-            self.append(code)
+            self.__append(code)
 
-
-    def append(self, code) :
+    def __append(self, code) :
         self.__fingering.append(notes.Notes(code))
 
-    def delete(self, index) :
-        if index < len(self.__fingering):
+    def __delete(self, index) :
+        if index < len(self.__fingering) :
             del self.__fingering[index]
 
         else:
@@ -62,7 +61,7 @@ class Fingering:
 
     def set(self, n) : 
         """
-        SetFingering의 기능 : self.__fingering에 저장되어 있는 코드들의 운지법 중
+        set의 기능 : self.__fingering에 저장되어 있는 코드들의 운지법 중
         입력으로 받은 것과 가장 유사한 코드를 찾아 fingering을 설정하는 것
         """
         idx = self.__find_similar_code(n)
@@ -70,7 +69,7 @@ class Fingering:
         Set fingering
         """
 
-    def __find_similar_code(self, n):
+    def __find_similar_code(self, n) :
         max_count = 0
         most_similar_index = 0
         
