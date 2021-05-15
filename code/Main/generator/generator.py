@@ -1,4 +1,4 @@
-from hand import hand
+from generator.hand import hand
 from music import music
 from fingering import fingering
 
