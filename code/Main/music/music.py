@@ -1,13 +1,13 @@
 import sys
 from notes import notes
 
-class Music:
-    def __init__(self, music_ = None):
+class Music :
+    def __init__(self, music_ = None) :
         self.__music = []
         if music_ != None :
             self.set(music_)
 
-    def set(self, music_):
+    def set(self, music_) :
         self.__music = [notes.Notes(notes_) for notes_ in music_]
 
     def get(self) :

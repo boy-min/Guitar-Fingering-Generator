@@ -1,15 +1,16 @@
 import sys
 from notes.note import note
 
-class Notes:
-    def __init__(self, notes_ = None):
+class Notes :
+    def __init__(self, notes_ = None) :
         self.__notes = []
-        self.set(notes_)
+        if notes_ != None :
+            self.set(notes_)
 
     def set(self, notes_) :
         self.__notes = [note.Note(note_) for note_ in notes_]
     
-    def get(self):
+    def get(self) :
         return self.__notes
 
     def show(self, index = -1) :
