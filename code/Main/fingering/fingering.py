@@ -44,12 +44,12 @@ class Fingering :
         ]
 
         for code in codes : 
-            self.append(code)
+            self.__append(code)
 
-    def append(self, code) :
+    def __append(self, code) :
         self.__fingering.append(notes.Notes(code))
 
-    def delete(self, index) :
+    def __delete(self, index) :
         if index < len(self.__fingering) :
             del self.__fingering[index]
 
