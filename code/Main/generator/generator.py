@@ -18,12 +18,11 @@ class Generator :
         return self.__music
 
     def generate(self) :
-        """
-        generate의 기능 : 알고리즘을 통해 효율성을 고려한 fingering을 찾아
-        __music의 각 note 별로 fingering 정보를 수정하는 것
-        """
+        #  generate efficient fingering and edit fingering in self.__music
+
+        #  set initial fingering
         for notes_ in self.__music.get() :
             self.__fingering.set(notes_)
-        """
-        Algorithms
-        """
+
+        #  generate efficient fingering
+        #  algorithms here
