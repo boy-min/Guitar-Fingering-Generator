@@ -59,15 +59,14 @@ class Fingering :
     def get(self) :
         return self.__fingering
 
-    def set(self, n) : 
-        """
-        set의 기능 : self.__fingering에 저장되어 있는 코드들의 운지법 중
-        입력으로 받은 것과 가장 유사한 코드를 찾아 fingering을 설정하는 것
-        """
+    def set(self, n) :
+        #  find most similar code, and set initial fingering
+
+        #  find most similar code and get its index
         idx = self.__find_similar_code(n)
-        """
-        Set fingering
-        """
+
+        #  set initial fingering
+        #  algorithms here
 
     def __find_similar_code(self, n) :
         max_count = 0
