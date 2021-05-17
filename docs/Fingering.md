@@ -31,20 +31,20 @@ The list of `Notes` objects. Each notes contain the information about certain gu
 def __append(self, code)
 ```
 
-
+Append guitar code at `fingering` variable in the format of `Notes`.
 
 ### delete
 ```py
 def __delete(self, index)
 ```
 
-
+Delete guitar code from `fingering`.
 
 ### find_similar_code
 ```py
 def __find_similar_code(self, n)
 ```
-
+Finds and returns guitar code most similar to `n` by using `fingering` varlable.
 
 
 ### get
@@ -52,11 +52,11 @@ def __find_similar_code(self, n)
 def get(self)
 ```
 
-
+Returns `fingering` variable.
 
 ### set
 ```py
 def set(self, n)
 ```
 
-
+Finds most similar guitar code by usin `find_similar_code`, and sets initial fingering.
