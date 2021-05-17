@@ -22,7 +22,7 @@ Instantiates the `Fingering` object. Initializes member variable `fingering` and
 self.__fingering
 ```
 
-The list of `Notes` objects. Each notes contain the information about certain guitar code.
+The list of `Notes` objects. Each notes have the information about certain guitar code.
 
 ## Member functions
 
@@ -59,4 +59,4 @@ Returns `fingering` variable.
 def set(self, n)
 ```
 
-Finds most similar guitar code by usin `find_similar_code`, and sets initial fingering.
+Finds most similar guitar code by using `find_similar_code`, and sets initial fingering.
