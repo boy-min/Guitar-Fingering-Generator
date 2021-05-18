@@ -21,7 +21,10 @@ class Note :
 
     def __eq__(self, other) :
         return self.get('string') == other.get('string') and self.get('fret') == other.get('fret')
-        
+
+    def set_finger(self, finger) :
+        self.__finger = finger
+
     def set(self, string, fret, finger) :
         self.__string = string
         self.__fret = fret
