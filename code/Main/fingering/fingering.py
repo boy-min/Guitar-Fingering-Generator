@@ -67,10 +67,10 @@ class Fingering :
             notes_ = self.__fingering[idx]
 
             #  set initial fingering
-            for index, note1 in enumerate(n) :
+            for index, note1 in enumerate(n.get()) :
                 used_finger = []
                 finger = 0
-                for note2 in notes_ :
+                for note2 in notes_.get() :
                     if note1 == note2 :
                         finger = note2.get('finger')
                 if finger == 0 :
