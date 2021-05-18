@@ -8,7 +8,10 @@ class Music :
             self.set(music_)
 
     def set(self, music_) :
-        self.__music = [notes.Notes(notes_) for notes_ in music_]
+        if type(music_) == list :
+            self.__music = [notes.Notes(notes_) for notes_ in music_]
+        else :
+            sys.exit("WrongParameterTypeError")
 
     def get(self) :
         return self.__music

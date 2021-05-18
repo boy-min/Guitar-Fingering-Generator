@@ -61,28 +61,32 @@ class Fingering :
 
     def set(self, n) :
         #  find most similar code, and set initial fingering
+        if type(n) == notes.Notes :
+            #  find most similar code and get its index
+            idx = self.__find_similar_code(n)
+            notes_ = self.__fingering[idx]
 
-        #  find most similar code and get its index
-        idx = self.__find_similar_code(n)
+            #  set initial fingering
+            #  algorithms here
 
-        #  set initial fingering
-        #  algorithms here
+        else :
+            sys.exit("WrongParameterTypeError")
 
     def __find_similar_code(self, n) :
         max_count = 0
         most_similar_index = 0
-        
-        for index, notes_ in enumerate(self.__fingering) : 
+
+        for index, notes_ in enumerate(self.__fingering) :
             count = 0
 
             for note1 in notes_.get() :
                 for note2 in n.get() :
-                    if note1 == note2 : 
+                    if note1 == note2 :
                         count = count + 1
                         break
 
             if count > max_count :
                 max_count = count
                 most_similar_index = index
-                
+
         return most_similar_index

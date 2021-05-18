@@ -8,7 +8,11 @@ class Notes :
             self.set(notes_)
 
     def set(self, notes_) :
-        self.__notes = [note.Note(note_) for note_ in notes_]
+        if type(notes_) == list :
+            self.__notes = [note.Note(note_) for note_ in notes_]
+
+        else :
+            sys.exit("WrongParameterTypeError")
     
     def get(self) :
         return self.__notes

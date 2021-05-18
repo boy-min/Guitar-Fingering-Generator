@@ -13,7 +13,7 @@ This class manages entire processes with `Music`, `Fingering`, `Hand` objects. I
 def __init__(self, music_ = None)
 ```
 
-Instantiates the `Generator` object. Instantiates all member variables and sets `music` value if `Generator` received `music_` value in the format of **list**.
+Instantiates the `Generator` object. Initializes all member variables and sets `music` value if `Generator` received `music_` value in the format of **list**.
 
 ## Member variables
 

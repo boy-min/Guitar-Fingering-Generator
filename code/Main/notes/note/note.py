@@ -7,14 +7,17 @@ class Note :
         self.__finger = 0
 
         if note_ != None :
-            if len(note_) == 3 : 
-                self.set(note_[0], note_[1], note_[2])
+            if type(note_) == list :
+                if len(note_) == 3 :
+                    self.set(note_[0], note_[1], note_[2])
 
-            elif len(note_) == 2 :
-                self.set(note_[0], note_[1], 0)
+                elif len(note_) == 2 :
+                    self.set(note_[0], note_[1], 0)
 
+                else :
+                    sys.exit("WrongParameterNumberError")
             else :
-                sys.exit("WrongParameterNumberError")
+                sys.exit("WrongParameterTypeError")
 
     def __eq__(self, other) :
         return self.get('string') == other.get('string') and self.get('fret') == other.get('fret')

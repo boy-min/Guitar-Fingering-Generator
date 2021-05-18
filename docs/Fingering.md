@@ -44,7 +44,7 @@ Delete guitar code from `fingering`.
 ```py
 def __find_similar_code(self, n)
 ```
-Finds and returns guitar code most similar to `n` by using `fingering` varlable.
+Finds and returns guitar code most similar to `n` by using `fingering` variable.
 
 
 ### get
