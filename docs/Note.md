@@ -40,6 +40,13 @@ The information about finger number. Indicates which finger to press on the guit
 
 ## Member functions
 
+### set_finger
+```py
+def set_finger(self, finger)
+```
+Sets `finger` variables. Used by `Fingering` class.
+
+
 ### set
 ```py
 def set(self, string, fret, finger)
