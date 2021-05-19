@@ -14,13 +14,16 @@ class Generator :
 
             for tr in music_.tracks:
                 for ms in tr.measures:
+                    measure = []
                     for vc in ms.voices:
                         for bt in vc.beats:
                             beat = []
                             for nt in bt.notes:
                                 note = [nt.string, nt.value, 0]
                                 beat.append(note)
-                            musics.append(beat)
+                            measure.append(beat)
+                    musics.append(measure)
+                    
             self.set(musics)
             
         elif music_ != None : 
@@ -36,8 +39,9 @@ class Generator :
         #  generate efficient fingering and edit fingering in self.__music
 
         #  set initial fingering
-        for notes_ in self.__music.get() :
-            self.__fingering.set(notes_)
+        for measure in self.__music.get() :
+            for notes_ in measure :
+                self.__fingering.set(notes_)
 
         #  generate efficient fingering
         #  algorithms here
