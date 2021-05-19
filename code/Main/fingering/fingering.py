@@ -77,7 +77,7 @@ class Fingering :
                     # can't find fingering
                     continue
                 else :
-                    note1.set_finger(finger)
+                    note1.set(None, None, finger)
                     if finger in used_finger :
                         print("highcode")
                     else :
