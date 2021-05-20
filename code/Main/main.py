@@ -31,7 +31,7 @@ for id, measure in enumerate(notes.get()):
             elif fin == 4:
                 finger = guitarpro.Fingering.little
             ProTab.tracks[0].measures[id].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
-guitarpro.write(ProTab, "Finger_"+Song)
+guitarpro.write(ProTab, "Resources\\Finger_"+Song)
 
 #printer.show(g_generator.get())
 #printer.show(g_generator.get(), 0)
