@@ -21,11 +21,14 @@ class Note :
 
     def __eq__(self, other) :
         return self.get('string') == other.get('string') and self.get('fret') == other.get('fret')
-        
-    def set(self, string, fret, finger) :
-        self.__string = string
-        self.__fret = fret
-        self.__finger = finger
+
+    def set(self, string = None, fret = None, finger = None) :
+        if string != None :
+            self.__string = string
+        if fret != None :
+            self.__fret = fret
+        if finger != None :
+            self.__finger = finger
 
     def get(self, key = None) :
         if key == None :

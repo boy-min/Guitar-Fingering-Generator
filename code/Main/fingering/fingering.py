@@ -67,7 +67,21 @@ class Fingering :
             notes_ = self.__fingering[idx]
 
             #  set initial fingering
-            #  algorithms here
+            for index, note1 in enumerate(n.get()) :
+                used_finger = []
+                finger = 0
+                for note2 in notes_.get() :
+                    if note1 == note2 :
+                        finger = note2.get('finger')
+                if finger == 0 :
+                    # can't find fingering
+                    continue
+                else :
+                    note1.set(None, None, finger)
+                    if finger in used_finger :
+                        print("highcode")
+                    else :
+                        used_finger.append(finger)
 
         else :
             sys.exit("WrongParameterTypeError")

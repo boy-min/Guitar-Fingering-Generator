@@ -13,7 +13,7 @@ class Notes :
 
         else :
             sys.exit("WrongParameterTypeError")
-    
+
     def get(self) :
         return self.__notes
 
