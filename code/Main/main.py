@@ -1,19 +1,14 @@
 from generator import generator as g
-from printer import printer
 import guitarpro
 
+print("Music title : ", end='')
 Song = input()
 
 ProTab = guitarpro.parse("Resources\\"+Song)
 
-
-
 g_generator = g.Generator(ProTab)
 
-#print("Before")
-#printer.show(g_generator.get())
 g_generator.generate()
-print("After")
 
 notes = g_generator.get()
 for id, measure in enumerate(notes.get()):
@@ -32,7 +27,3 @@ for id, measure in enumerate(notes.get()):
                 finger = guitarpro.Fingering.little
             ProTab.tracks[0].measures[id].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
 guitarpro.write(ProTab, "Resources\\Finger_"+Song)
-
-#printer.show(g_generator.get())
-#printer.show(g_generator.get(), 0)
-#printer.show(g_generator.get(), 1)
