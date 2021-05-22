@@ -11,12 +11,12 @@ This project uses `PyGuitarPro` to get music.
 Reading .gp5 files is as easy as:
 ```py
 import guitarpro
-ProTab = guitarpro.parse('song_title1.gp5')
+ProTab = guitarpro.parse('music_title_1.gp5')
 ```
 
 Writing .gp5 files isn't that hard as well:
 ```py
-guitarpro.write(ProTab, 'song_title2.gp5')
+guitarpro.write(ProTab, 'music_title_2.gp5')
 ```
 
 ## Installation
