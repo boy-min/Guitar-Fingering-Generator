@@ -9,7 +9,7 @@ class Music :
 
     def set(self, music_) :
         if type(music_) == list :
-            self.__music = [notes.Notes(notes_) for notes_ in music_]
+            self.__music = [[notes.Notes(notes_) for notes_ in measure] for measure in music_]
         else :
             sys.exit("WrongParameterTypeError")
 
