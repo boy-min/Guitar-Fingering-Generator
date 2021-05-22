@@ -2,33 +2,7 @@
 
 2021 CAUSE Open Source Software Project TEAM 05
 
-## Introduction
-
-This project uses `PyGuitarPro` to get music.
-
-`PyGuitarPro` is a package to read, write and manipulate GP3, GP4 and GP5 files.
-
-Reading .gp5 files is as easy as:
-```py
-import guitarpro
-ProTab = guitarpro.parse('song_title1.gp5')
-```
-
-Writing .gp5 files isn't that hard as well:
-```py
-guitarpro.write(ProTab, 'song_title2.gp5')
-```
-
-## Installation
-
-Install `PyGuitarPro`:
-```
-pip install PyGuitarPro
-```
-
 ## Documentation
-
-[PyGuitarPro](https://pyguitarpro.readthedocs.io/en/stable/) : Documentation of PyGuitarPro package.
 
 [docs/README.md](docs/README.md) : Documentation of the program design.
 
