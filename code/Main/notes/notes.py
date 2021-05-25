@@ -16,15 +16,3 @@ class Notes :
 
     def get(self) :
         return self.__notes
-
-    def show(self, index = -1) :
-        if index == -1 : 
-            for note_ in self.__notes :
-                note_.show()
-                
-        else :
-            if index < len(self.__notes) :
-                self.__notes[index].show()
-
-            else :
-                sys.exit("OutOfRangeError")
