@@ -16,3 +16,7 @@ class Notes :
 
     def get(self) :
         return self.__notes
+
+    def show(self) :
+        for note_ in self.__notes :
+            note_.show()

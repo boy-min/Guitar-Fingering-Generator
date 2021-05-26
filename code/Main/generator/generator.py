@@ -35,8 +35,22 @@ class Generator :
 
     def generate(self) :
         for measure in self.__music.get() :
-            for idx, notes_ in enumerate(measure) :
+            for notes_ in measure :
                 self.__set_init_fingering(notes_)
+        for measure in self.__music.get() :
+            for notes1 in measure :
+                check = False
+                for notes2 in measure :
+                    if check :
+                        print("notes1")
+                        notes1.show()
+                        print("notes2")
+                        notes2.show()
+                        print("weight =", self.__cal_weight(notes1, notes2))
+                        break
+                    if notes1 == notes2 :
+                        check = True
+                        continue
 
     def __set_init_fingering(self, notes_) :
         fret_list = []
@@ -78,19 +92,33 @@ class Generator :
                                         temp_list.append(note1)
                                     break
 
-                    if len(temp_list) == 2 :
+                    if fret_list[0] != overlap :
                         if temp_list[0].get("string") > temp_list[1].get("string") :
                             temp_list[1].set(None, None, temp_list[1].get("finger") + 1)
                         else :
                             temp_list[0].set(None, None, temp_list[0].get("finger") + 1)
 
+    def __cal_weight(self, notes_1, notes_2) :
+        count_1 = [0, 0, 0, 0]
+        count_2 = [0, 0, 0, 0]
+        for note in notes_1.get() :
+            count_1[note.get("finger") - 1] = count_1[note.get("finger") - 1] + 1
+        for note in notes_2.get() :
+            count_2[note.get("finger") - 1] = count_2[note.get("finger") - 1] + 1
+
+        weight = 0
+        check = False
+        for note1 in notes_1.get() :
+            for note2 in notes_2.get() :
+                if note1.get("finger") == note2.get("finger") and note1.get("fret") != 0 and note2.get("fret") != 0:
+                    if count_1[note1.get("finger") - 1] > 1 :
+                        if not check :
+                            d = self.__get_distance(6,note2.get("string"),note1.get("fret"),note2.get("fret"))
+                            weight = weight + d
+                            check = True
+                    d = self.__get_distance(note1.get("string"),note2.get("string"),note1.get("fret"),note2.get("fret"))
+                    weight = weight + d
+        return weight
+
     def __get_distance(self, string_1, string_2, fret_1, fret_2) :
         return abs(string_1 - string_2)**2 + abs(fret_1 - fret_2)**2
-
-    def __get_direction(self, fret_1, fret_2):
-        if fret_1 > fret_2 :
-            return -1
-        elif fret_1 == fret_2 :
-            return 0
-        else :
-            return 1
