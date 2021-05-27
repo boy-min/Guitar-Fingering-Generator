@@ -38,42 +38,49 @@ class Generator :
         for measure in self.__music.get() :
             for notes_ in measure :
                 music_.append(notes_)
-        dp = [[[[-1, -1, -1, -1, -1, -1], 0, -1] for col in range(len(music_))] for row in range(4096)]
+        dp = [[[0, -1] for col in range(len(music_))] for row in range(4096)]
         for i in reversed(range(len(music_))) :
             print("Doing",i,"th try.")
             if i == len(music_) - 1 :
                 min_ = 2147483647
                 fingers1 = []
-                for finger1 in range(4096):
-                    for j in range(len(music_[i].get())):
+                for finger1 in range(4**len(music_[i].get())) :
+                    for j in range(len(music_[i].get())) :
                         fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
-                    dp[finger1][i][0] = fingers1
-                    dp[finger1][i][1] = self.__difficulty(music_[i],fingers1)
+                    dp[finger1][i][0] = self.__difficulty(music_[i],fingers1)
             else :
                 min_ = 2147483647
                 fingers1 = []
-                for finger1 in range(4096):
-                    for j in range(len(music_[i].get())):
+                for finger1 in range(4**len(music_[i].get())) :
+                    for j in range(len(music_[i].get())) :
                         fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
-                    for finger2 in range(4096) :
-                        dif = dp[finger2][i+1][1] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
+                    for finger2 in range(4**len(music_[i].get())) :
+                        dif = dp[finger2][i+1][0] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
                         if min_ > dif :
                             min_ = dif
-                            dp[finger1][i][2] = finger2
+                            dp[finger1][i][1] = finger2
+
         finger_list = []
         min_ = 2147483647
         idx = -1
         for i in range(len(music_)) :
             if i == 0 :
-                for finger in range(4096) :
-                    if min_ > dp[finger][i][1] :
-                        min_ = dp[finger][i][1]
+                for finger in range(4**len(music_[i].get())) :
+                    if min_ > dp[finger][i][0] :
+                        min_ = dp[finger][i][0]
                         idx = finger
-                finger_list.append(dp[idx][i][0])
-                idx = dp[idx][i][2]
+                fingers = []
+                for j in range(len(music_[i].get())) :
+                    fingers.append((idx % (4 ** (6 - j))) / (4 ** (5 - j)))
+                finger_list.append(fingers)
+                idx = dp[idx][i][1]
             else :
-                finger_list.append(dp[idx][i][0])
-                idx = dp[idx][i][2]
+                fingers = []
+                for j in range(len(music_[i].get())) :
+                    fingers.append((idx % (4 ** (6 - j))) / (4 ** (5 - j)))
+                finger_list.append(fingers)
+                idx = dp[idx][i][1]
+
         for idx1, notes_ in enumerate(music_) :
             for idx2, note_ in enumerate(notes_.get()) :
                 note_.set(None, None, finger_list[idx1][idx2])
