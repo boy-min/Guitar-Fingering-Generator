@@ -83,7 +83,7 @@ class Generator :
 
         for idx1, notes_ in enumerate(music_) :
             for idx2, note_ in enumerate(notes_.get()) :
-                note_.set(None, None, finger_list[idx1][idx2])
+                note_.set(None, None, finger_list[idx1][idx2] + 1)
 
     def __difficulty(self, notes1 = None, fingers1 = None, notes2 = None, fingers2 = None) :
         return 0
