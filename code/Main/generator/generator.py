@@ -34,91 +34,49 @@ class Generator :
         return self.__music
 
     def generate(self) :
+        music_ = []
         for measure in self.__music.get() :
             for notes_ in measure :
-                self.__set_init_fingering(notes_)
-        for measure in self.__music.get() :
-            for notes1 in measure :
-                check = False
-                for notes2 in measure :
-                    if check :
-                        print("notes1")
-                        notes1.show()
-                        print("notes2")
-                        notes2.show()
-                        print("weight =", self.__cal_weight(notes1, notes2))
-                        break
-                    if notes1 == notes2 :
-                        check = True
-                        continue
-
-    def __set_init_fingering(self, notes_) :
-        fret_list = []
-        overlap = -1
-        count = 0
-        for note1 in notes_.get() :
-            if note1.get("fret") != 0 :
-                if note1.get("fret") not in fret_list :
-                    fret_list.append(note1.get("fret"))
-                else :
-                    overlap = note1.get("fret")
-                    count = count + 1
-        fret_list.sort()
-        if len(fret_list) != 0 :
-            if overlap == -1 :
-                for note1 in notes_.get() :
-                    for idx in range(0,len(fret_list)) :
-                        if fret_list[idx] == note1.get("fret") :
-                            note1.set(None, None, idx + 1)
-                            break
+                music_.append(notes_)
+        dp = [[[[-1, -1, -1, -1, -1, -1], 0, -1] for col in range(len(music_))] for row in range(4096)]
+        for i in reversed(range(len(music_))) :
+            print("Doing",i,"th try.")
+            if i == len(music_) - 1 :
+                min_ = 2147483647
+                fingers1 = []
+                for finger1 in range(4096):
+                    for j in range(len(music_[i].get())):
+                        fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
+                    dp[finger1][i][0] = fingers1
+                    dp[finger1][i][1] = self.__difficulty(music_[i],fingers1)
             else :
-                if count > 1 :
-                    for note1 in notes_.get() :
-                        for idx in range(0, len(fret_list)) :
-                            if fret_list[idx] == note1.get("fret") :
-                                note1.set(None, None, idx + 1)
-                                break
-                else :
-                    temp_list = []
-                    for note1 in notes_.get() :
-                        for idx in range(0,len(fret_list)) :
-                            if fret_list[idx] == note1.get("fret") :
-                                if fret_list[idx] > overlap :
-                                    note1.set(None, None, idx + 2)
-                                    break
-                                else :
-                                    note1.set(None, None, idx + 1)
-                                    if fret_list[idx] == overlap :
-                                        temp_list.append(note1)
-                                    break
+                min_ = 2147483647
+                fingers1 = []
+                for finger1 in range(4096):
+                    for j in range(len(music_[i].get())):
+                        fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
+                    for finger2 in range(4096) :
+                        dif = dp[finger2][i+1][1] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
+                        if min_ > dif :
+                            min_ = dif
+                            dp[finger1][i][2] = finger2
+        finger_list = []
+        min_ = 2147483647
+        idx = -1
+        for i in range(len(music_)) :
+            if i == 0 :
+                for finger in range(4096) :
+                    if min_ > dp[finger][i][1] :
+                        min_ = dp[finger][i][1]
+                        idx = finger
+                finger_list.append(dp[idx][i][0])
+                idx = dp[idx][i][2]
+            else :
+                finger_list.append(dp[idx][i][0])
+                idx = dp[idx][i][2]
+        for idx1, notes_ in enumerate(music_) :
+            for idx2, note_ in enumerate(notes_.get()) :
+                note_.set(None, None, finger_list[idx1][idx2])
 
-                    if fret_list[0] != overlap :
-                        if temp_list[0].get("string") > temp_list[1].get("string") :
-                            temp_list[1].set(None, None, temp_list[1].get("finger") + 1)
-                        else :
-                            temp_list[0].set(None, None, temp_list[0].get("finger") + 1)
-
-    def __cal_weight(self, notes_1, notes_2) :
-        count_1 = [0, 0, 0, 0]
-        count_2 = [0, 0, 0, 0]
-        for note in notes_1.get() :
-            count_1[note.get("finger") - 1] = count_1[note.get("finger") - 1] + 1
-        for note in notes_2.get() :
-            count_2[note.get("finger") - 1] = count_2[note.get("finger") - 1] + 1
-
-        weight = 0
-        check = False
-        for note1 in notes_1.get() :
-            for note2 in notes_2.get() :
-                if note1.get("finger") == note2.get("finger") and note1.get("fret") != 0 and note2.get("fret") != 0:
-                    if count_1[note1.get("finger") - 1] > 1 :
-                        if not check :
-                            d = self.__get_distance(6,note2.get("string"),note1.get("fret"),note2.get("fret"))
-                            weight = weight + d
-                            check = True
-                    d = self.__get_distance(note1.get("string"),note2.get("string"),note1.get("fret"),note2.get("fret"))
-                    weight = weight + d
-        return weight
-
-    def __get_distance(self, string_1, string_2, fret_1, fret_2) :
-        return abs(string_1 - string_2)**2 + abs(fret_1 - fret_2)**2
+    def __difficulty(self, notes1 = None, fingers1 = None, notes2 = None, fingers2 = None) :
+        return 0
