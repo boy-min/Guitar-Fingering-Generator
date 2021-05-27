@@ -40,7 +40,6 @@ class Generator :
                 music_.append(notes_)
         dp = [[[0, -1] for col in range(len(music_))] for row in range(4096)]
         for i in reversed(range(len(music_))) :
-            print("Doing",i,"th try.")
             if i == len(music_) - 1 :
                 min_ = 2147483647
                 fingers1 = []
