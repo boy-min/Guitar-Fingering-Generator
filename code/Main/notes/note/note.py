@@ -35,6 +35,3 @@ class Note :
             return {'string' : self.__string, 'fret' : self.__fret, 'finger' : self.__finger}
 
         return {'string' : self.__string, 'fret' : self.__fret, 'finger' : self.__finger}.get(key)
-
-    def show(self) :
-        print("(",self.__string," ",self.__fret," ",self.__finger,")",sep='')
