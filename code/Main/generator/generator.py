@@ -55,7 +55,7 @@ class Generator :
                         fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
                     for finger2 in range(4**len(music_[i].get())) :
                         dif = dp[finger2][i+1][0] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
-                        if min_ >= dif :
+                        if min_ > dif :
                             min_ = dif
                             dp[finger1][i][1] = finger2
 
