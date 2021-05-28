@@ -42,20 +42,20 @@ class Generator :
         for i in reversed(range(len(music_))) :
             if i == len(music_) - 1 :
                 min_ = 2147483647
-                fingers1 = []
                 for finger1 in range(4**len(music_[i].get())) :
+                    fingers1 = []
                     for j in range(len(music_[i].get())) :
-                        fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
+                        fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
                     dp[finger1][i][0] = self.__difficulty(music_[i],fingers1)
             else :
                 min_ = 2147483647
-                fingers1 = []
                 for finger1 in range(4**len(music_[i].get())) :
+                    fingers1 = []
                     for j in range(len(music_[i].get())) :
-                        fingers1.append((finger1 % (4 ** (6 - j))) / (4 ** (5 - j)))
+                        fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
                     for finger2 in range(4**len(music_[i].get())) :
                         dif = dp[finger2][i+1][0] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
-                        if min_ > dif :
+                        if min_ >= dif :
                             min_ = dif
                             dp[finger1][i][1] = finger2
 
@@ -70,13 +70,13 @@ class Generator :
                         idx = finger
                 fingers = []
                 for j in range(len(music_[i].get())) :
-                    fingers.append((idx % (4 ** (6 - j))) / (4 ** (5 - j)))
+                    fingers.append((idx % (4 ** (j + 1))) // (4 ** j))
                 finger_list.append(fingers)
                 idx = dp[idx][i][1]
             else :
                 fingers = []
                 for j in range(len(music_[i].get())) :
-                    fingers.append((idx % (4 ** (6 - j))) / (4 ** (5 - j)))
+                    fingers.append((idx % (4 ** (j + 1))) // (4 ** j))
                 finger_list.append(fingers)
                 idx = dp[idx][i][1]
 
