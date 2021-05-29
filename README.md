@@ -68,8 +68,16 @@ will be stored in the `Resources` folder.
 
 If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT.md) By participating,
 you are expected to uphold this code.
-We use GitHub issues for tracking requests and bugs. If you want to contribute, you should follow
+We use [GitHub issues](https://github.com/boy-min/Guitar-Fingering-Generator/issues) for tracking requests and bugs, and you should follow
 [PEP-8](https://www.python.org/dev/peps/pep-0008/) coding convention rules.
+Contributing will make our project more valuable. If you want to do, contribute in the following order.
+
+1. Forking our repository.
+2. Creating a branch.
+3. Adding commits.
+4. Opening a pull request.
+
+If you open a pull request, we will review the codes, develop it, and merge when it is determined to be a good code.
 
 ## License
 
