@@ -13,10 +13,6 @@
 
 Manages all processes to generate efficient fingering.
 
-## [class Fingering](Fingering.md)
-
-Manages fingering about basic guitar codes.
-
 ## [class Music](Music.md)
 
 Manages music sheet data.

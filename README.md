@@ -53,7 +53,7 @@ Exit the program.
 ```
 
 After `Music title :`, you should write music's title which you want to generate fingering about.
-It's format must be `.gp5`, and it should be in the `Resources` folder, which exists in the folder where `main.py` is located.
+It's format must be `.gp*`, and it should be in the `Resources` folder, which exists in the folder where `main.py` is located.
 And according to your hand & finger, you will enter the number 0 ~ 2.
 After generating is over, music containing efficient fingering, whose name is `Finger_ + "your music title"`,
 will be stored in the `Resources` folder.
@@ -66,8 +66,10 @@ will be stored in the `Resources` folder.
 
 ## Contribution guidelines
 
-If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT) By participating,
+If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT.md) By participating,
 you are expected to uphold this code.
+We use GitHub issues for tracking requests and bugs. If you want to contribute, you should follow
+[PEP-8](https://www.python.org/dev/peps/pep-0008/) coding convention rules.
 
 ## License
 
