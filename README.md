@@ -75,7 +75,7 @@ Contributing will make our project more valuable. If you want to do, contribute 
 1. Forking our repository.
 2. Creating a branch.
 3. Adding commits.
-4. Opening a pull request.
+4. Opening a [pull request.](https://github.com/boy-min/Guitar-Fingering-Generator/pulls)
 
 If you open a pull request, we will review the codes, develop it, and merge when it is determined to be a good code.
 
