@@ -27,6 +27,8 @@ while 1:
     length = length_
     break
 
+print("Generating...",end='')
+
 g_generator = g.Generator(ProTab, size, length)
 
 g_generator.generate()
@@ -49,5 +51,5 @@ for id, measure in enumerate(notes.get()) :
             ProTab.tracks[0].measures[id].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
 guitarpro.write(ProTab, "Resources\\Finger_"+Song)
 
-print("Success to write file : Finger_"+Song)
+print("\n"+"Success to write file : Finger_"+Song)
 print("Exit the program.")
