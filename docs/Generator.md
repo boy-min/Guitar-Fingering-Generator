@@ -4,7 +4,7 @@ Manages all processes to generate effieicnt fingering
 
 ## Description
 
-This class manages entire processes with `Music`, `Fingering`, `Hand` objects. Instantiated and used by `main()`.
+This class manages entire processes with `Music`, `Hand` objects. Instantiated and used by `main()`.
 
 ## Constructor
 
@@ -23,13 +23,6 @@ self.__music
 ```
 
 The `Music` object to use. Manages music sheet data.
-
-### fingering
-```py
-self.__fingering
-```
-
-The `Fingering` object to use. Manages fingering about basic guitar codes.
 
 ### hand
 ```py
@@ -59,4 +52,11 @@ Returns `music`.
 def generate(self)
 ```
 
-Generates effieicnt fingering and edit fingering information in `music`.
+Generates efficient fingering and edit fingering information in `music`.
+
+### difficulty
+```py
+def __difficulty(self, notes1 = None, fingers1 = None, notes2 = None, fingers2 = None)
+```
+
+Measures the degree of difficulty(= how hard it is to play) between two notes, or one notes, with certain criteria.
