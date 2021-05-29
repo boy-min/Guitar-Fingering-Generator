@@ -23,18 +23,18 @@ guitarpro.write(ProTab, 'music_title_2.gp5')
 ## Installation
 
 Install `PyGuitarPro`:
-```
+```sh
 pip install PyGuitarPro
 ```
 
 Cloning this project:
-```
+```sh
 git clone https://github.com/boy-min/Guitar-Fingering-Generator.git
 ```
 
 Put your music in `Guitar-Fingering-Generator\code\Main\Resources` folder.
 And follow the command line:
-```
+```sh
 cd Guitar-Fingering-Generator\code\Main
 python main.py
 ```
@@ -65,6 +65,9 @@ will be stored in the `Resources` folder.
 [docs/README.md](docs/README.md) : Documentation of the program design.
 
 ## Contribution guidelines
+
+If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT) By participating,
+you are expected to uphold this code.
 
 ## License
 
