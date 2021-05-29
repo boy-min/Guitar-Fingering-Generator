@@ -66,8 +66,10 @@ will be stored in the `Resources` folder.
 
 ## Contribution guidelines
 
-If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT) By participating,
+If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT.md) By participating,
 you are expected to uphold this code.
+We use GitHub issues for tracking requests and bugs. If you want to contribute, you should follow
+[PEP-8](https://www.python.org/dev/peps/pep-0008/) coding convention rules.
 
 ## License
 
