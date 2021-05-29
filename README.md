@@ -1,6 +1,7 @@
 # Guitar-Fingering-Generator
 
-2021 CAUSE Open Source Software Project TEAM 05
+Input a desired music and the generator will generate efficient fingering via a dynamic programming algorithm.
+You don't have to worry about which fingering to choose. This project will provide guidelines for people who are struggling with how to play the guitar.
 
 ## Introduction
 
@@ -22,9 +23,40 @@ guitarpro.write(ProTab, 'music_title_2.gp5')
 ## Installation
 
 Install `PyGuitarPro`:
-```
+```sh
 pip install PyGuitarPro
 ```
+
+Cloning this project:
+```sh
+git clone https://github.com/boy-min/Guitar-Fingering-Generator.git
+```
+
+Put your music in `Guitar-Fingering-Generator\code\Main\Resources` folder.
+And follow the command line:
+```sh
+cd Guitar-Fingering-Generator\code\Main
+python main.py
+```
+
+## Program Example
+
+Implementation example of `main.py`
+
+```
+Music title : twilight.gp5
+Your hand size (0 : normal, 1 : small, 2 : big) : 0
+Your finger length (0 : normal, 1 : short, 2 : long) : 0
+Generating...
+Success to write file : Finger_twilight.gp5
+Exit the program.
+```
+
+After `Music title :`, you should write music's title which you want to generate fingering about.
+It's format must be `.gp5`, and it should be in the `Resources` folder, which exists in the folder where `main.py` is located.
+And according to your hand & finger, you will enter the number 0 ~ 2.
+After generating is over, music containing efficient fingering, whose name is `Finger_ + "your music title"`,
+will be stored in the `Resources` folder.
 
 ## Documentation
 
@@ -32,14 +64,17 @@ pip install PyGuitarPro
 
 [docs/README.md](docs/README.md) : Documentation of the program design.
 
-## Final report
+## Contribution guidelines
 
-[OSS project proposal final report.docx](OSSProjectProposalFinalReport.docx) : Final report about project
-
-## Team Members
-
-강현준, 김도균, 박상엽, 손현민
+If you want to contribute to our project, be sure to review the [code of conduct.](CODE_OF_CONDUCT) By participating,
+you are expected to uphold this code.
 
 ## License
 
 [MIT License](LICENSE)
+
+## Team Members
+
+2021 CAUSE Open Source Software Project TEAM 05
+
+강현준, 김도균, 박상엽, 손현민
