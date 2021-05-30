@@ -15,17 +15,3 @@ class Music :
 
     def get(self) :
         return self.__music
-
-    def show(self, index = -1) :
-        if index == -1 : 
-            for i, notes_ in enumerate(self.__music) :
-                print("notes #", i + 1, sep = '')
-                notes_.show()
-
-        else :
-            if index < len(self.__music) :
-                print("notes #", index + 1, sep = '')
-                self.__music[index].show()
-                
-            else :
-                sys.exit("OutOfRangeError")
