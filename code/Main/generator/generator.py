@@ -6,6 +6,7 @@ class Generator :
     def __init__(self, music_ = None, size_ = None, length_ = None) :
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
+        self.__weight = [100, 0, 0, 0]
 
         if type(music_) == guitarpro.models.Song :
             musics = []
@@ -37,6 +38,9 @@ class Generator :
         music_ = []
         for measure_ in self.__music.get() :
             for notes_ in measure_ :
+                for note_ in notes_.get() :
+                    if note_.get("fret") == 0 :
+                        notes_.get().remove(note_)
                 music_.append(notes_)
         dp = [[[0, -1] for col in range(len(music_))] for row in range(4096)]
         for i in reversed(range(len(music_))) :
@@ -54,7 +58,10 @@ class Generator :
                     for j in range(len(music_[i].get())) :
                         fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
                     for finger2 in range(4**len(music_[i].get())) :
-                        dif = dp[finger2][i+1][0] + self.__difficulty(music_[i],fingers1,music_[i+1],dp[finger2][i+1][0])
+                        fingers2 = []
+                        for k in range(len(music_[i+1].get())) :
+                            fingers2.append((finger2 % (4 ** (k + 1))) // (4 ** k))
+                        dif = dp[finger2][i+1][0] + self.__difficulty(music_[i],fingers1,music_[i+1],fingers2)
                         if min_ > dif :
                             min_ = dif
                             dp[finger1][i][1] = finger2
@@ -85,7 +92,10 @@ class Generator :
                 note_.set(None, None, finger_list[idx1][idx2] + 1)
 
     def __difficulty(self, notes_1 = None, finger_list_1 = None, notes_2 = None, finger_list_2 = None) :
-        if notes_2 == None and finger_list_2 == None :
-            return 0
-        else :
-            return 0
+        return 0
+
+    def __check_twist(self, notes_1, finger_list_1, notes_2, finger_list_2) :
+        return 0
+
+    def __check_highcode(self, notes_1, finger_list_1, notes_2, finger_list_2) :
+        return 0
