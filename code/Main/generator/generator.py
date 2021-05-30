@@ -35,8 +35,8 @@ class Generator :
 
     def generate(self) :
         music_ = []
-        for measure in self.__music.get() :
-            for notes_ in measure :
+        for measure_ in self.__music.get() :
+            for notes_ in measure_ :
                 music_.append(notes_)
         dp = [[[0, -1] for col in range(len(music_))] for row in range(4096)]
         for i in reversed(range(len(music_))) :
@@ -84,5 +84,8 @@ class Generator :
             for idx2, note_ in enumerate(notes_.get()) :
                 note_.set(None, None, finger_list[idx1][idx2] + 1)
 
-    def __difficulty(self, notes1 = None, fingers1 = None, notes2 = None, fingers2 = None) :
-        return 0
+    def __difficulty(self, notes_1 = None, finger_list_1 = None, notes_2 = None, finger_list_2 = None) :
+        if notes_2 == None and finger_list_2 == None :
+            return 0
+        else :
+            return 0

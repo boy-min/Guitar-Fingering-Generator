@@ -56,7 +56,7 @@ Generates efficient fingering and edit fingering information in `music`.
 
 ### difficulty
 ```py
-def __difficulty(self, notes1 = None, fingers1 = None, notes2 = None, fingers2 = None)
+def __difficulty(self, notes_1 = None, finger_list_1 = None, notes_2 = None, finger_list_2 = None)
 ```
 
 Measures the degree of difficulty(= how hard it is to play) between two notes, or one notes, with certain criteria.
