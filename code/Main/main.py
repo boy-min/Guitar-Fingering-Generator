@@ -49,8 +49,7 @@ for id_, measure in enumerate(notes.get()):
                 finger = guitarpro.Fingering.little
             else :
                 finger = guitarpro.Fingering.open
-            if ProTab.tracks[0].isPercussionTrack:
-                ProTab.tracks[0].measures[id_].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
+            ProTab.tracks[0].measures[id_].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
 guitarpro.write(ProTab, "Resources\\Finger_"+Song)
 
 print("\n"+"Success to write file : Finger_"+Song)
