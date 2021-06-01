@@ -177,6 +177,7 @@ class Generator:
             difficulty += abs(pos_of_hand_1 - pos_of_hand_2) * self.__weight[6] * self.__ratio[self.__hand.get("size")]
             difficulty += self.__get_change_dif(list_1, list_2)
 
+        print(difficulty)
         return difficulty
 
     def __get_change_dif(self, sorted_list_1, sorted_list_2):
@@ -206,9 +207,9 @@ class Generator:
                 difficulty += d * self.__ratio[self.__hand.get("length")]
 
         finger_fret = [pos, pos + 1, pos + 2, pos + 3]
-        for idx in range(len(sorted_list) - 1):
-            difficulty += (self.__weight[5] ** abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]])) * \
-                          self.__ratio[self.__hand.get("length") + 3]
+        for idx in range(len(sorted_list)):
+            d = self.__weight[5] * abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) * (sorted_list[idx][0] + 1)
+            difficulty += d * self.__ratio[self.__hand.get("length") + 3]
             difficulty += self.__weight[sorted_list[idx][0] + 1]
         return difficulty
 
