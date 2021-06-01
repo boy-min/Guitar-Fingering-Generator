@@ -158,8 +158,16 @@ class Generator:
         return difficulty
 
     def __get_pos(self, notes, finger_list):
-        return 0
-        # 손의 중심 번호를 반환하는 알고리즘
+        if 1 in finger_list:
+            return notes[finger_list.index(1)].get("fret")
+        elif 0 in finger_list:
+            return notes[finger_list.index(0)].get("fret") + 1
+        elif 2 in finger_list:
+            return notes[finger_list.index(2)].get("fret") - 1
+        elif 3 in finger_list:
+            return notes[finger_list.index(3)].get("fret") - 2
+        else:
+            return None
 
     def __get_dif(self, notes, finger_list):
         return 0
