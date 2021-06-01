@@ -6,7 +6,10 @@ class Generator:
     def __init__(self, music_ = None, size_ = None, length_ = None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
-        self.__weight = [1000]
+        self.__weight = [1000, 10, 20, 40, 100, 10, 50]
+        # 0 - 원칙 어기면 발생, 1 : 검지, 2 : 중지, 3 : 약지, 4 : 새끼, 5 : 손가락 올바른 위치를 어겼을때 발생, 6 : 손의 이동거리
+        self.__ratio = [2, 4, 1, 2, 4, 1]
+        # 0~2 : 손의 크기, 3~5 : 손가락의 길이
 
         if type(music_) == guitarpro.models.Song:
             musics = []
@@ -143,35 +146,68 @@ class Generator:
         if difficulty >= self.__weight[0]:
             return difficulty
 
+        list_1 = []
+        list_2 = []
+
         if notes_1 is not None and notes_2 is None:
-            difficulty += self.__get_dif(notes_1, finger_list_1)
+            for idx, note_ in enumerate(notes_1.get()):
+                list_1.append([finger_list_1[idx], note_.get("fret"), note_.get("string")])
+            list_1.sort()
+            pos_of_hand_1 = self.__get_pos(notes_1, finger_list_1)
+            difficulty += self.__get_dif(list_1, pos_of_hand_1)
         elif notes_1 is None and notes_2 is not None:
-            difficulty += self.__get_dif(notes_2, finger_list_2)
+            for idx, note_ in enumerate(notes_2.get()):
+                list_2.append([finger_list_2[idx], note_.get("fret"), note_.get("string")])
+            list_2.sort()
+            pos_of_hand_2 = self.__get_pos(notes_2, finger_list_2)
+            difficulty += self.__get_dif(list_2, pos_of_hand_2)
         else:
-            difficulty += self.__get_dif(notes_1, finger_list_1)
-            difficulty += self.__get_dif(notes_2, finger_list_2)
+            for idx, note_ in enumerate(notes_1.get()):
+                list_1.append([finger_list_1[idx], note_.get("fret"), note_.get("string")])
+            list_1.sort()
+            for idx, note_ in enumerate(notes_2.get()):
+                list_2.append([finger_list_2[idx], note_.get("fret"), note_.get("string")])
+            list_2.sort()
             pos_of_hand_1 = self.__get_pos(notes_1, finger_list_1)
             pos_of_hand_2 = self.__get_pos(notes_2, finger_list_2)
-            # 여러 정보 (손의 중심에 따른 이동 거리, 손가락들 사이의 거리, 손가락들 사이의 모양이 변하는 정도 등)
-            # 를 이용하여 운지법의 변화에 따른 difficulty 의 값을 반환하는 알고리즘
+            difficulty += self.__get_dif(list_1, pos_of_hand_1)
+            difficulty += self.__get_dif(list_2, pos_of_hand_2)
+            difficulty += self.__get_change_dif(list_1, list_2)
+            difficulty += abs(pos_of_hand_1 - pos_of_hand_2) * self.__weight[6]
+            difficulty += self.__get_change_dif(list_1, list_2)
 
         return difficulty
 
+    def __get_change_dif(self, sorted_list_1, sorted_list_2):
+        return 0
+
     def __get_pos(self, notes, finger_list):
-        if 1 in finger_list:
-            return notes[finger_list.index(1)].get("fret")
-        elif 0 in finger_list:
-            return notes[finger_list.index(0)].get("fret") + 1
+        if 0 in finger_list:
+            return notes.get()[finger_list.index(0)].get("fret")
+        elif 1 in finger_list:
+            return notes.get()[finger_list.index(1)].get("fret") - 1
         elif 2 in finger_list:
-            return notes[finger_list.index(2)].get("fret") - 1
+            return notes.get()[finger_list.index(2)].get("fret") - 2
         elif 3 in finger_list:
-            return notes[finger_list.index(3)].get("fret") - 2
+            return notes.get()[finger_list.index(3)].get("fret") - 3
         else:
             return None
 
-    def __get_dif(self, notes, finger_list):
-        return 0
-        # 하나의 notes에 대하여 얼마나 운지하기 어려운지 판단하는 알고리즘
+    def __get_dif(self, sorted_list, pos):
+        difficulty = 0
+        for idx in range(len(sorted_list) - 1):
+            if sorted_list[idx][0] == sorted_list[idx+1][0]:
+                if sorted_list[idx][0] == 0:
+                    continue
+            else:
+                d = (sorted_list[idx][1] - sorted_list[idx + 1][1]) ** 2 + (sorted_list[idx][2] - sorted_list[idx + 1][2]) ** 2
+                difficulty += d * self.__ratio[self.__hand.get("length")]
+
+        finger_fret = [pos, pos + 1, pos + 2, pos + 3]
+        for idx in range(len(sorted_list) - 1):
+            difficulty += (self.__weight[5] ** abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]])) * self.__ratio[self.__hand.get("length") + 3]
+            difficulty += self.__weight[sorted_list[idx][0] + 1]
+        return difficulty
 
     def __check_twist(self, notes, finger_list):
         if notes is not None and finger_list is not None:
