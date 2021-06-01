@@ -22,7 +22,7 @@ class Generator:
                                 beat.append(note)
                             measure.append(beat)
                     musics.append(measure)
-                    
+
             self.set(musics)
             
         elif music_ is not None:
@@ -173,10 +173,7 @@ class Generator:
             temp_list.sort()
             for idx in range(len(temp_list) - 1):
                 if temp_list[idx][0] < temp_list[idx+1][0]:
-                    if temp_list[idx][1] >= temp_list[idx+1][1]:
-                        return self.__weight[0]
-                else:
-                    if temp_list[idx][1] != temp_list[idx+1][1]:
+                    if temp_list[idx][1] > temp_list[idx+1][1]:
                         return self.__weight[0]
         return 0
 
