@@ -178,7 +178,6 @@ class Generator:
             difficulty += abs(pos_of_hand_1 - pos_of_hand_2) * self.__weight[6] * self.__ratio[self.__hand.get("size")]
             difficulty += self.__get_change_dif(list_1, list_2)
 
-        print(difficulty)
         return difficulty
 
     def __get_change_dif(self, sorted_list_1, sorted_list_2):
