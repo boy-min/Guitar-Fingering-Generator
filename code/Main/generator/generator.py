@@ -8,10 +8,7 @@ class Generator:
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
         self.__weight = [100000, 10, 20, 40, 60, 10, 20, 20, 50, 60]
-        # 0 - 원칙 어기면 발생, 1~4 : 각각 검지, 중지, 약지, 새끼 눌렀을때 발생
-        # 5 : 손가락 올바른 위치를 어겼을때 발생, 6 : 손의 이동거리에 따라 발생, 7~9 : 기울기 변화에 따라 발생
         self.__ratio = [2, 4, 1, 2, 4, 1]
-        # 0~2 : 손의 크기, 3~5 : 손가락의 길이
 
         if type(music_) == guitarpro.models.Song:
             musics = []
@@ -180,6 +177,18 @@ class Generator:
 
         return difficulty
 
+    def __get_pos(self, notes, finger_list):
+        if 0 in finger_list:
+            return notes.get()[finger_list.index(0)].get("fret")
+        elif 1 in finger_list:
+            return notes.get()[finger_list.index(1)].get("fret") - 1
+        elif 2 in finger_list:
+            return notes.get()[finger_list.index(2)].get("fret") - 2
+        elif 3 in finger_list:
+            return notes.get()[finger_list.index(3)].get("fret") - 3
+        else:
+            return None
+
     def __get_change_dif(self, sorted_list_1, sorted_list_2):
         difficulty = 0
         gradient_list_1 = [-1, 1, 1]
@@ -206,18 +215,6 @@ class Generator:
         difficulty += int((abs(gradient_list_1[1] - gradient_list_2[1]) * self.__weight[8]) // 10)
         difficulty += int((abs(gradient_list_1[2] - gradient_list_2[2]) * self.__weight[9]) // 10)
         return difficulty
-
-    def __get_pos(self, notes, finger_list):
-        if 0 in finger_list:
-            return notes.get()[finger_list.index(0)].get("fret")
-        elif 1 in finger_list:
-            return notes.get()[finger_list.index(1)].get("fret") - 1
-        elif 2 in finger_list:
-            return notes.get()[finger_list.index(2)].get("fret") - 2
-        elif 3 in finger_list:
-            return notes.get()[finger_list.index(3)].get("fret") - 3
-        else:
-            return None
 
     def __get_dif(self, sorted_list, pos):
         difficulty = 0
