@@ -7,7 +7,7 @@ class Generator:
     def __init__(self, music_=None, size_=None, length_=None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
-        self.__weight = [100000, 10, 20, 40, 60, 10, 20, 20, 50, 60]
+        self.__weight = [100000, 10, 20, 40, 60, 10, 20, 2, 5, 6]
         self.__ratio = [2, 4, 1, 2, 4, 1]
 
         if type(music_) == guitarpro.models.Song:
@@ -209,13 +209,13 @@ class Generator:
                     if sorted_list_2[idx][2] > sorted_list_2[idx + 1][2]:
                         gradient_list_2[i] = 4 + sorted_list_2[idx][2] - sorted_list_2[idx + 1][2]
                     else:
-                        gradient_list_2[i] = 4 - sorted_list_2[idx][2] + sorted_list_2[idx + 1][2]
+                        gradient_list_2[i] = -4 - sorted_list_2[idx][2] + sorted_list_2[idx + 1][2]
                 else:
                     gradient_list_2[i] = (sorted_list_2[idx][2] - sorted_list_2[idx + 1][2]) \
                                          / (sorted_list_2[idx + 1][1] - sorted_list_2[idx][1])
-        difficulty += int((abs(gradient_list_1[0] - gradient_list_2[0]) * self.__weight[7]) // 10)
-        difficulty += int((abs(gradient_list_1[1] - gradient_list_2[1]) * self.__weight[8]) // 10)
-        difficulty += int((abs(gradient_list_1[2] - gradient_list_2[2]) * self.__weight[9]) // 10)
+        difficulty += int(abs(gradient_list_1[0] - gradient_list_2[0]) * self.__weight[7])
+        difficulty += int(abs(gradient_list_1[1] - gradient_list_2[1]) * self.__weight[8])
+        difficulty += int(abs(gradient_list_1[2] - gradient_list_2[2]) * self.__weight[9])
         return difficulty
 
     def __get_dif(self, sorted_list, pos):
@@ -235,7 +235,7 @@ class Generator:
                         if sorted_list[idx][2] > sorted_list[idx + 1][2]:
                             gradient_list[i] = 4 + sorted_list[idx][2] - sorted_list[idx + 1][2]
                         else:
-                            gradient_list[i] = 4 - sorted_list[idx][2] + sorted_list[idx + 1][2]
+                            gradient_list[i] = -4 - sorted_list[idx][2] + sorted_list[idx + 1][2]
                     else:
                         gradient_list[i] = (sorted_list[idx][2] - sorted_list[idx + 1][2]) \
                                            / (sorted_list[idx + 1][1] - sorted_list[idx][1])
