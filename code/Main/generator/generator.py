@@ -95,7 +95,8 @@ class Generator:
                                 fingers2 = []
                                 for j in range(len(music_[i + 1].get())):
                                     fingers2.append((finger2 % (4 ** (j + 1))) // (4 ** j))
-                                dif = dp[i + 1][finger2][0] + self.__difficulty(music_[i], fingers1, music_[i + 1], fingers2)
+                                dif = dp[i + 1][finger2][0] + self.__difficulty(music_[i], fingers1,
+                                                                                music_[i + 1], fingers2)
                                 if min_ > dif:
                                     min_ = dif
                                     dp[i][finger1][1] = finger2
@@ -160,7 +161,7 @@ class Generator:
             list_2.sort()
             pos_of_hand_2 = self.__get_pos(notes_2, finger_list_2)
             difficulty += self.__get_dif(list_2, pos_of_hand_2)
-        else:
+        elif notes_1 is not None and notes_2 is not None:
             for idx, note_ in enumerate(notes_1.get()):
                 list_1.append([finger_list_1[idx], note_.get("fret"), note_.get("string")])
             list_1.sort()
@@ -173,7 +174,6 @@ class Generator:
             difficulty += self.__get_dif(list_2, pos_of_hand_2)
             difficulty += self.__get_change_dif(list_1, list_2)
             difficulty += abs(pos_of_hand_1 - pos_of_hand_2) * self.__weight[6] * self.__ratio[self.__hand.get("size")]
-            difficulty += self.__get_change_dif(list_1, list_2)
 
         return difficulty
 
@@ -201,7 +201,8 @@ class Generator:
                     else:
                         gradient_list_1[i] = 4 - sorted_list_1[idx][2] + sorted_list_1[idx + 1][2]
                 else:
-                    gradient_list_1[i] = (sorted_list_1[idx][2] - sorted_list_1[idx + 1][2]) / (sorted_list_1[idx + 1][1] - sorted_list_1[idx][1])
+                    gradient_list_1[i] = (sorted_list_1[idx][2] - sorted_list_1[idx + 1][2]) \
+                                         / (sorted_list_1[idx + 1][1] - sorted_list_1[idx][1])
         for idx in range(len(sorted_list_2) - 1):
             for i in range(sorted_list_2[idx][0], sorted_list_2[idx + 1][0], 1):
                 if sorted_list_2[idx + 1][1] == sorted_list_2[idx][1]:
@@ -210,7 +211,8 @@ class Generator:
                     else:
                         gradient_list_2[i] = 4 - sorted_list_2[idx][2] + sorted_list_2[idx + 1][2]
                 else:
-                    gradient_list_2[i] = (sorted_list_2[idx][2] - sorted_list_2[idx + 1][2]) / (sorted_list_2[idx + 1][1] - sorted_list_2[idx][1])
+                    gradient_list_2[i] = (sorted_list_2[idx][2] - sorted_list_2[idx + 1][2]) \
+                                         / (sorted_list_2[idx + 1][1] - sorted_list_2[idx][1])
         difficulty += int((abs(gradient_list_1[0] - gradient_list_2[0]) * self.__weight[7]) // 10)
         difficulty += int((abs(gradient_list_1[1] - gradient_list_2[1]) * self.__weight[8]) // 10)
         difficulty += int((abs(gradient_list_1[2] - gradient_list_2[2]) * self.__weight[9]) // 10)
@@ -224,8 +226,10 @@ class Generator:
                 if sorted_list[idx][0] == 0:
                     continue
             else:
-                d = (sorted_list[idx][1] - sorted_list[idx + 1][1]) ** 2 + (sorted_list[idx][2] - sorted_list[idx + 1][2]) ** 2
-                difficulty += (d // (sorted_list[idx][0] - sorted_list[idx + 1][0])) * self.__ratio[self.__hand.get("length") + 3]
+                d = (sorted_list[idx][1] - sorted_list[idx + 1][1]) ** 2 \
+                    + (sorted_list[idx][2] - sorted_list[idx + 1][2]) ** 2
+                difficulty += (d // (sorted_list[idx][0] - sorted_list[idx + 1][0])) \
+                              * self.__ratio[self.__hand.get("length") + 3]
                 for i in range(sorted_list[idx][0], sorted_list[idx + 1][0], 1):
                     if sorted_list[idx + 1][1] == sorted_list[idx][1]:
                         if sorted_list[idx][2] > sorted_list[idx + 1][2]:
@@ -233,13 +237,15 @@ class Generator:
                         else:
                             gradient_list[i] = 4 - sorted_list[idx][2] + sorted_list[idx + 1][2]
                     else:
-                        gradient_list[i] = (sorted_list[idx][2] - sorted_list[idx + 1][2]) / (sorted_list[idx + 1][1] - sorted_list[idx][1])
+                        gradient_list[i] = (sorted_list[idx][2] - sorted_list[idx + 1][2]) \
+                                           / (sorted_list[idx + 1][1] - sorted_list[idx][1])
         difficulty += int((abs(gradient_list[0] + 1) * self.__weight[7]) // 10)
         difficulty += int((abs(gradient_list[1] - 1) * self.__weight[8]) // 10)
         difficulty += int((abs(gradient_list[2] - 1) * self.__weight[9]) // 10)
         finger_fret = [pos, pos + 1, pos + 2, pos + 3]
         for idx in range(len(sorted_list)):
-            d = self.__weight[5] * abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) * (sorted_list[idx][0] + 1)
+            d = self.__weight[5] * abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) \
+                * (sorted_list[idx][0] + 1)
             difficulty += d * self.__ratio[self.__hand.get("length") + 3]
             difficulty += self.__weight[sorted_list[idx][0] + 1]
         return difficulty
