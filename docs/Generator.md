@@ -81,7 +81,7 @@ Measures the degree of difficulty(= how hard it is to play) between two notes, o
 def __get_pos(self, notes, finger_list)
 ```
 
-Estimates 2'th finger's fret number, and returns it.
+Estimates index finger's fret number, and returns it.
 
 ### get_change_dif
 ```py
