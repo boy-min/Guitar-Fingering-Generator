@@ -291,6 +291,8 @@ class Generator:
                                 string_list.append(note_.get("string"))
 
                 string_list.sort()
+                if string_list[0] != 1:
+                    return self.__weight[0]
                 for idx in range(len(string_list) - 1):
                     if string_list[idx] != string_list[idx + 1] - 1:
                         return self.__weight[0]
