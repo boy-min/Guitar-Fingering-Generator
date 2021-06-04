@@ -20,7 +20,7 @@ class Hand :
         hand_queue = [ [0, 0, 0, 0, 0, 0, 0, 0] for i in range(120)]
         list_of_features = [(4, 20),(2,4),(5,8),(9,12),(13,16),(17,20),(5,17), (0, 9)]
         
-        self.__length = [22, 0, 0, 0, 0, 0, 0, 0]
+        features = [22, 0, 0, 0, 0, 0, 0, 0]
         stand = 0
         text = "wait"
         
@@ -38,7 +38,7 @@ class Hand :
                 length_arr = [22, 0, 0, 0, 0, 0, 0, 0]
                 for i, j in list_of_features[1:]:
                     length = hd.find_len(lmList[i], lmList[j])
-                    length_arr[idx] = (length/stand) * self.__length[0]
+                    length_arr[idx] = (length/stand) * features[0]
                     idx += 1
                 length_queue.append(stand/1000)
                 length_queue.pop(0)
@@ -60,13 +60,30 @@ class Hand :
      
             cv2.imshow("Image", img)
             cv2.waitKey(1)
-        self.__length[0] = 0
+            
+        features[0] = 0
         for hand in hand_queue:
             for i, length in enumerate(hand):
-                self.__length[i]+=length
+                features[i]+=length
         
-        for i in range(len(self.__length)):
-            self.__length[i]/=120
+        for i in range(len(features)):
+            features[i]/=120
+        if 4<features[6]<6:
+            self.__size = 0
+        elif features[6]<=4:
+            self.__size = 1
+        else:
+            self.__size = 2
+
+        av_len = np.mean(features)
+
+        if 10<features[6]<13:
+            self.__length = 0
+        elif features[6]<=10:
+            self.__length = 1
+        else:
+            self.__length = 2
+        
         print('ending detector')
         print(self.__length)
         cv2.destroyAllWindows()
@@ -76,3 +93,4 @@ class Hand :
             return {'size' : self.__size, 'length' : self.__length}
         
         return {'size' : self.__size, 'length' : self.__length}.get(key)
+

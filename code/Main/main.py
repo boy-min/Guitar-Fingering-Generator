@@ -33,13 +33,12 @@ g_generator = g.Generator(ProTab, size, length)
 g_generator.generate()
 
 notes = g_generator.get()
-for id, measure in enumerate(notes.get()) :
-    for idx, beat in enumerate(measure) :
-        for index, note in enumerate(beat.get()) :
+for id_, measure in enumerate(notes.get()):
+    for idx, beat in enumerate(measure):
+        for index, note in enumerate(beat.get()):
             fin = note.get()["finger"]
-            if fin == 0 :
-                finger = guitarpro.Fingering.open
-            elif fin == 1 :
+            finger = 0
+            if fin == 1 :
                 finger = guitarpro.Fingering.index
             elif fin == 2 :
                 finger = guitarpro.Fingering.middle
@@ -47,7 +46,9 @@ for id, measure in enumerate(notes.get()) :
                 finger = guitarpro.Fingering.annular
             elif fin == 4 :
                 finger = guitarpro.Fingering.little
-            ProTab.tracks[0].measures[id].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
+            else :
+                finger = guitarpro.Fingering.open
+            ProTab.tracks[0].measures[id_].voices[0].beats[idx].notes[index].effect.leftHandFinger = finger
 guitarpro.write(ProTab, "Resources\\Finger_"+Song)
 
 print("\n"+"Success to write file : Finger_"+Song)
