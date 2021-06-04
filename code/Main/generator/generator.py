@@ -7,6 +7,7 @@ class Generator:
     def __init__(self, music_=None, size_=None, length_=None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
+        self.__hand.set()
         self.__weight = [100000, 10, 20, 40, 60, 10, 20, 2, 5, 6]
         self.__ratio = [2, 4, 1, 2, 4, 1]
 
