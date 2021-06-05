@@ -7,7 +7,7 @@ class Generator:
     def __init__(self, music_=None, size_=None, length_=None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
-        self.__weight = [100000, 10, 10, 25, 30, 20, 40, 2, 5, 6]
+        self.__weight = [100000, 7, 8, 15, 20, 70, 90, 5, 15, 12, 60]
         self.__ratio = [2, 3, 1, 2, 3, 1]
 
         if type(music_) == guitarpro.models.Song:
@@ -57,10 +57,10 @@ class Generator:
                     dp[i][4096][0] = 0
                 else:
                     for finger1 in range(4 ** len(music_[i].get())):
-                        fingers1 = []
+                        finger_list_1 = []
                         for j in range(len(music_[i].get())):
-                            fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
-                        dp[i][finger1][0] = self.__difficulty(music_[i], fingers1, None, None)
+                            finger_list_1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
+                        dp[i][finger1][0] = self.__difficulty(music_[i], finger_list_1, None, None, dp, i, music_)
             else:
                 if len(music_[i].get()) == 0:
                     if len(music_[i + 1].get()) == 0:
@@ -69,10 +69,11 @@ class Generator:
                     else:
                         min_ = 2147483647
                         for finger2 in range(4 ** len(music_[i + 1].get())):
-                            fingers2 = []
+                            finger_list_2 = []
                             for j in range(len(music_[i + 1].get())):
-                                fingers2.append((finger2 % (4 ** (j + 1))) // (4 ** j))
-                            dif = dp[i + 1][finger2][0] + self.__difficulty(None, None, music_[i + 1], fingers2)
+                                finger_list_2.append((finger2 % (4 ** (j + 1))) // (4 ** j))
+                            dif = dp[i + 1][finger2][0] + self.__difficulty(None, None, music_[i + 1],
+                                                                            finger_list_2, dp, i, music_)
                             if min_ > dif:
                                 min_ = dif
                                 dp[i][4096][1] = finger2
@@ -80,23 +81,24 @@ class Generator:
                 else:
                     if len(music_[i + 1].get()) == 0:
                         for finger1 in range(4 ** len(music_[i].get())):
-                            fingers1 = []
+                            finger_list_1 = []
                             for j in range(len(music_[i].get())):
-                                fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
-                            dp[i][finger1][0] = dp[i + 1][4096][0] + self.__difficulty(music_[i], fingers1, None, None)
+                                finger_list_1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
+                            dp[i][finger1][0] = dp[i + 1][4096][0] + self.__difficulty(music_[i], finger_list_1,
+                                                                                       None, None, dp, i, music_)
                             dp[i][finger1][1] = 4096
                     else:
                         for finger1 in range(4 ** len(music_[i].get())):
-                            fingers1 = []
+                            finger_list_1 = []
                             for j in range(len(music_[i].get())):
-                                fingers1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
+                                finger_list_1.append((finger1 % (4 ** (j + 1))) // (4 ** j))
                             min_ = 2147483647
                             for finger2 in range(4 ** len(music_[i + 1].get())):
-                                fingers2 = []
+                                finger_list_2 = []
                                 for j in range(len(music_[i + 1].get())):
-                                    fingers2.append((finger2 % (4 ** (j + 1))) // (4 ** j))
-                                dif = dp[i + 1][finger2][0] + self.__difficulty(music_[i], fingers1,
-                                                                                music_[i + 1], fingers2)
+                                    finger_list_2.append((finger2 % (4 ** (j + 1))) // (4 ** j))
+                                dif = dp[i + 1][finger2][0] + self.__difficulty(music_[i], finger_list_1, music_[i + 1],
+                                                                                finger_list_2, dp, i, music_)
                                 if min_ > dif:
                                     min_ = dif
                                     dp[i][finger1][1] = finger2
@@ -137,7 +139,7 @@ class Generator:
             for idx2, note_ in enumerate(notes_.get()):
                 note_.set(None, None, finger_list[idx1][idx2] + 1)
 
-    def __difficulty(self, notes_1, finger_list_1, notes_2, finger_list_2):
+    def __difficulty(self, notes_1, finger_list_1, notes_2, finger_list_2, dp, i, music_):
         difficulty = 0
         difficulty += self.__check_highcode(notes_1, finger_list_1)
         difficulty += self.__check_highcode(notes_2, finger_list_2)
@@ -155,12 +157,24 @@ class Generator:
             list_1.sort()
             pos_of_hand_1 = self.__get_pos(notes_1, finger_list_1)
             difficulty += self.__get_dif(list_1, pos_of_hand_1)
+            recent_use = self.__get_recent_use(dp, i, finger_list_1, None, music_)
+            for idx, note_ in enumerate(notes_1.get()):
+                if recent_use[finger_list_1[idx]][0] != 0:
+                    if note_.get("fret") != recent_use[finger_list_1[idx]][0] \
+                            and note_.get("string") != recent_use[finger_list_1[idx]][1]:
+                        difficulty += self.__weight[10]
         elif notes_1 is None and notes_2 is not None:
             for idx, note_ in enumerate(notes_2.get()):
                 list_2.append([finger_list_2[idx], note_.get("fret"), note_.get("string")])
             list_2.sort()
             pos_of_hand_2 = self.__get_pos(notes_2, finger_list_2)
             difficulty += self.__get_dif(list_2, pos_of_hand_2)
+            recent_use = self.__get_recent_use(dp, i, None, finger_list_2, music_)
+            for idx, note_ in enumerate(notes_2.get()):
+                if recent_use[finger_list_2[idx]][0] != 0:
+                    if note_.get("fret") != recent_use[finger_list_2[idx]][0] \
+                            and note_.get("string") != recent_use[finger_list_2[idx]][1]:
+                        difficulty += self.__weight[10]
         elif notes_1 is not None and notes_2 is not None:
             for idx, note_ in enumerate(notes_1.get()):
                 list_1.append([finger_list_1[idx], note_.get("fret"), note_.get("string")])
@@ -173,9 +187,97 @@ class Generator:
             difficulty += self.__get_dif(list_1, pos_of_hand_1)
             difficulty += self.__get_dif(list_2, pos_of_hand_2)
             difficulty += self.__get_change_dif(list_1, list_2)
+            recent_use = self.__get_recent_use(dp, i, finger_list_1, finger_list_2, music_)
+            for idx, note_ in enumerate(notes_1.get()):
+                if recent_use[finger_list_1[idx]][0] != 0:
+                    if note_.get("fret") != recent_use[finger_list_1[idx]][0] \
+                            and note_.get("string") != recent_use[finger_list_1[idx]][1]:
+                        difficulty += self.__weight[10]
+            for idx, note_ in enumerate(notes_2.get()):
+                if recent_use[finger_list_2[idx]][0] != 0:
+                    if note_.get("fret") != recent_use[finger_list_2[idx]][0] \
+                            and note_.get("string") != recent_use[finger_list_2[idx]][1]:
+                        difficulty += self.__weight[10]
             difficulty += abs(pos_of_hand_1 - pos_of_hand_2) * self.__weight[6] * self.__ratio[self.__hand.get("size")]
 
         return difficulty
+
+    def __get_recent_use(self, dp, i, finger_list_1, finger_list_2, music_):
+        if i == len(dp) - 1:
+            return [[0, 0], [0, 0], [0, 0], [0, 0]]
+        else:
+            if finger_list_1 is not None and finger_list_2 is None:
+                result = [[0, 0], [0, 0], [0, 0], [0, 0]]
+                idx = 0
+                count = 10
+                for j in range(len(finger_list_1)):
+                    idx += finger_list_1[len(finger_list_1) - 1 - j] * (4 ** j)
+                for j in range(i + 1, len(dp), 1):
+                    idx = dp[j][idx][1]
+                    count -= 1
+                    if count < 0:
+                        break
+                    if idx != 4096:
+                        finger_list = []
+                        for k in range(len(music_[j].get())):
+                            finger_list.append((idx % (4 ** (k + 1))) // (4 ** k))
+                        for k in range(len(finger_list)):
+                            if result[finger_list[k]][0] == 0 and result[finger_list[k]][1] == 0:
+                                result[finger_list[k]][0] = music_[j].get()[k].get("fret")
+                                result[finger_list[k]][1] = music_[j].get()[k].get("string")
+                    else:
+                        continue
+                    if result[0][0] != 0 and result[1][0] != 0 and result[2][0] != 0 and result[3][0] != 0:
+                        break
+                return result
+            elif finger_list_1 is None and finger_list_2 is not None:
+                result = [[0, 0], [0, 0], [0, 0], [0, 0]]
+                idx = 0
+                count = 10
+                for j in range(len(finger_list_2)):
+                    idx += finger_list_2[len(finger_list_2) - 1 - j] * (4 ** j)
+                for j in range(i + 1, len(dp), 1):
+                    idx = dp[j][idx][1]
+                    count -= 1
+                    if count < 0:
+                        break
+                    if idx != 4096:
+                        finger_list = []
+                        for k in range(len(music_[j].get())):
+                            finger_list.append((idx % (4 ** (k + 1))) // (4 ** k))
+                        for k in range(len(finger_list)):
+                            if result[finger_list[k]][0] == 0 and result[finger_list[k]][1] == 0:
+                                result[finger_list[k]][0] = music_[j].get()[k].get("fret")
+                                result[finger_list[k]][1] = music_[j].get()[k].get("string")
+                    else:
+                        continue
+                    if result[0][0] != 0 and result[1][0] != 0 and result[2][0] != 0 and result[3][0] != 0:
+                        break
+                return result
+            elif finger_list_1 is not None and finger_list_2 is not None:
+                result = [[0, 0], [0, 0], [0, 0], [0, 0]]
+                idx = 0
+                count = 10
+                for j in range(len(finger_list_2)):
+                    idx += finger_list_2[len(finger_list_2) - 1 - j] * (4 ** j)
+                for j in range(i + 2, len(dp), 1):
+                    idx = dp[j][idx][1]
+                    count -= 1
+                    if count < 0:
+                        break
+                    if idx != 4096:
+                        finger_list = []
+                        for k in range(len(music_[j].get())):
+                            finger_list.append((idx % (4 ** (k + 1))) // (4 ** k))
+                        for k in range(len(finger_list)):
+                            if result[finger_list[k]][0] == 0 and result[finger_list[k]][1] == 0:
+                                result[finger_list[k]][0] = music_[j].get()[k].get("fret")
+                                result[finger_list[k]][1] = music_[j].get()[k].get("string")
+                    else:
+                        continue
+                    if result[0][0] != 0 and result[1][0] != 0 and result[2][0] != 0 and result[3][0] != 0:
+                        break
+                return result
 
     def __get_pos(self, notes, finger_list):
         if 0 in finger_list:
@@ -224,15 +326,16 @@ class Generator:
                     if sorted_list[idx + 1][1] != sorted_list[idx][1]:
                         gradient_list[i] = (sorted_list[idx][2] - sorted_list[idx + 1][2]) \
                                            / (sorted_list[idx + 1][1] - sorted_list[idx][1])
-        difficulty += int((abs(gradient_list[0] + 1) * self.__weight[7]) // 10)
-        difficulty += int((abs(gradient_list[1] - 1) * self.__weight[8]) // 10)
-        difficulty += int((abs(gradient_list[2] - 1) * self.__weight[9]) // 10)
+        difficulty += int(abs(gradient_list[0] + 1) * self.__weight[7])
+        difficulty += int(abs(gradient_list[1] - 1) * self.__weight[8])
+        difficulty += int(abs(gradient_list[2] - 1) * self.__weight[9])
         finger_fret = [pos, pos + 1, pos + 2, pos + 3]
         for idx in range(len(sorted_list)):
-            d = self.__weight[5] * abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) \
-                * (sorted_list[idx][0] + 1)
-            difficulty += d * self.__ratio[self.__hand.get("length") + 3]
-            difficulty += self.__weight[sorted_list[idx][0] + 1]
+            if abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) > 1:
+                d = self.__weight[5] * abs(sorted_list[idx][1] - finger_fret[sorted_list[idx][0]]) \
+                    * (sorted_list[idx][0] + 1)
+                difficulty += d * self.__ratio[self.__hand.get("length") + 3]
+            difficulty += self.__weight[sorted_list[idx][0] + 1] * self.__ratio[self.__hand.get("length") + 3]
         return difficulty
 
     def __check_twist(self, notes, finger_list):
