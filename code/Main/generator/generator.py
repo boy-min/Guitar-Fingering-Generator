@@ -171,7 +171,7 @@ class Generator:
             [2],[],[1],[],[2],[],[4],[],[1,1],[3],[4],[3],[2],[],[3],
             [2],[],[3],[],[],[],[4],[],[3,2],[],[1],[],[],[],[3],
             [1],[2],[],[2],[3],[2],[1],[2],[],[2],[3],[2],[],[2],[],
-            [2,1],[3],[],[3],[4],[3],[2],[3],[2,3],[2,3],[1,4],
+            [2,1],[3],[],[3],[4],[3],[2],[2,3],[2,3],[1,4],
             [],[1],[4],[1],[],[1],[2],[1],[4],[1],[2],[1],[],[1],[],
             [1,2],[3],[],[3],[1],[4],[],[2],[2],[3],[2],[1],[1],[],
             [2,3],[1],[],[2],[],[4],[],[2],[],[1],[],[2],[],[3],
@@ -203,12 +203,15 @@ class Generator:
         count = 0
         if len(finger_list) == len(flowerdance):
             for idx in range(len(finger_list)):
-                if idx < len(flowerdance):
-                    t_list = finger_list[idx]
-                    for t in range(len(t_list)):
-                        t_list[t] = t_list[t] + 1
-                    if t_list == flowerdance[idx]:
-                        count += 1
+                check = False
+                for i in range(len(finger_list[idx])):
+                    if finger_list[idx][i] + 1 == flowerdance[idx][i]:
+                        continue
+                    else:
+                        check = True
+                        break
+                if not check:
+                    count += 1
         similarity = count * 100 / len(finger_list)
         print("similarity = ", similarity)
         for idx1, notes_ in enumerate(music_):
