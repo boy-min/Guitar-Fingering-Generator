@@ -36,7 +36,8 @@ The `Hand` object to use. Manages user's hand information.
 self.__weight
 ```
 
-Weight values to use. It has 10 values, and if follow rules [pull request 23.](https://github.com/boy-min/Guitar-Fingering-Generator/pull/23)
+Weight values to use. It has 11 values, and if follow rules [pull request 23,](https://github.com/boy-min/Guitar-Fingering-Generator/pull/23)
+[pull request 25.](https://github.com/boy-min/Guitar-Fingering-Generator/pull/25)
 
 ### ratio
 ```py
@@ -70,11 +71,18 @@ Generates efficient fingering and edit fingering information in `music`.
 
 ### difficulty
 ```py
-def __difficulty(self, notes_1, finger_list_1, notes_2, finger_list_2)
+def __difficulty(self, notes_1, finger_list_1, notes_2, finger_list_2, dp, i, music_):
 ```
 
 Measures the degree of difficulty(= how hard it is to play) between two notes, or one notes, with certain criteria. It uses
-`get_pos()`, `get_change_dif()`, `get_dif()` member functions to get difficulty.
+`get_pos()`, `get_change_dif()`, `get_dif()`, `get_recent_use()` member functions to get difficulty.
+
+### get_recent_use
+```py
+def __get_recent_use(self, dp, i, finger_list_1, finger_list_2, music_):
+```
+
+Gets fingering information, which recently used, by following DP-optimization path.
 
 ### get_pos
 ```py
