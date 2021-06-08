@@ -7,7 +7,6 @@ class Generator:
     def __init__(self, music_=None, size_=None, length_=None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
-        self.__hand.set()
         self.__weight = [100000, 10, 20, 40, 60, 10, 20, 2, 5, 6]
         self.__ratio = [2, 4, 1, 2, 4, 1]
 
@@ -144,6 +143,7 @@ class Generator:
         difficulty += self.__check_highcode(notes_2, finger_list_2)
         difficulty += self.__check_twist(notes_1, finger_list_1)
         difficulty += self.__check_twist(notes_2, finger_list_2)
+        print(difficulty)
         if difficulty >= self.__weight[0]:
             return difficulty
 
