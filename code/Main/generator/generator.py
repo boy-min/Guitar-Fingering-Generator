@@ -7,11 +7,7 @@ class Generator:
     def __init__(self, music_=None, size_=None, length_=None):
         self.__music = music.Music()
         self.__hand = hand.Hand(size_, length_)
-<<<<<<< HEAD
         self.__weight = [100000, 7, 10, 28, 35, 10, 100, 5, 15, 12, 20, 40]
-=======
-        self.__weight = [100000, 7, 10, 28, 35, 70, 100, 5, 15, 12, 20]
->>>>>>> main
         self.__ratio = [2, 3, 1, 2, 3, 1]
 
         if type(music_) == guitarpro.models.Song:
